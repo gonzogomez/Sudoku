@@ -77,7 +77,7 @@ function check_row(num, address){
 	for(var i=0; i<9; i++){
 		var cell = (row * 9 + i);
 		var x = 10;
-		if((board[cell] == num) || board[cell] != x){
+		if(board[cell] == num){
 			//console.log("false");
 			v = false;
 		}
