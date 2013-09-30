@@ -85,9 +85,14 @@ function color_square(address){
 //called when user clicks on square
 function make_move(){
 	var number = prompt("Please enter a number from 1-9");
-	var n = document.getElementById(this.id);
-	boardEasy[n.className] = number;
-	redraw_board();
+	if(/\D/.test(number) || (number >= 10 || number < 1)) {
+		alert("Only Numeric values 1-9");
+	}
+	else {
+		var n = document.getElementById(this.id);
+		boardEasy[n.className] = number;
+		redraw_board();
+	}
 }
 
 function redraw_board(){
