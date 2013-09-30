@@ -1,37 +1,7 @@
 var board = new Array(81);
-var boardEasy = new Array(81);
-for(var i = boardEasy.length-1; i>=0; --i) boardEasy[i] = "";
-boardEasy[1] = 9;
-boardEasy[3] = 7;
-boardEasy[6] = 8;
-boardEasy[7] = 6;
-boardEasy[10] = 3;
-boardEasy[11] = 1;
-boardEasy[14] = 5;
-boardEasy[16] = 2;
-boardEasy[18] = 8;
-boardEasy[20] = 6;
-boardEasy[29] = 7;
-boardEasy[31] = 5;
-boardEasy[35] = 6;
-boardEasy[39] = 3;
-boardEasy[41] = 7;
-boardEasy[45] = 5;
-boardEasy[49] = 1;
-boardEasy[51] = 7;
-boardEasy[60] = 1;
-boardEasy[62] = 9;
-boardEasy[64] = 2;
-boardEasy[66] = 6;
-boardEasy[69] = 3;
-boardEasy[70] = 5;
-boardEasy[73] = 5;
-boardEasy[74] = 4;
-boardEasy[77] = 8;
-boardEasy[79] = 7;
 
-window.onload = function(){
-	
+
+window.onload = function(){	
 	//Create 81 canvases for the 81 squares in the sudoku game
 	for(i=0;i<81;i++){
 		var c = document.createElement("canvas");
@@ -57,20 +27,117 @@ window.onload = function(){
 	color_square(30);
 	color_square(60);
 
-	generate_board(15);
+	generate_board("easy");
 	//Connect the reset button to its function
 	//document.getElementById("reset").onclick = reset;
 }
 
+function easy_board(){
+	for(var i = board.length-1; i>=0; --i) board[i] = "";
+	board[1] = 9;
+	board[3] = 7;
+	board[6] = 8;
+	board[7] = 6;
+	board[10] = 3;
+	board[11] = 1;
+	board[14] = 5;
+	board[16] = 2;
+	board[18] = 8;
+	board[20] = 6;
+	board[29] = 7;
+	board[31] = 5;
+	board[35] = 6;
+	board[39] = 3;
+	board[41] = 7;
+	board[45] = 5;
+	board[49] = 1;
+	board[51] = 7;
+	board[60] = 1;
+	board[62] = 9;
+	board[64] = 2;
+	board[66] = 6;
+	board[69] = 3;
+	board[70] = 5;
+	board[73] = 5;
+	board[74] = 4;
+	board[77] = 8;
+	board[79] = 7;
+}
+
+function medium_board(){
+	for(var i = board.length-1; i>=0; --i) board[i] = "";
+	board[1] = 8;
+	board[2] = 4;
+	board[3] = 3;
+	board[8] = 1;
+	board[10] = 7;
+	board[11] = 5;
+	board[15] = 9;
+	board[16] = 8;
+	board[18] = 3;
+	board[19] = 6;
+	board[31] = 9;
+	board[32] = 3;
+	board[34] = 1;
+	board[36] = 7;
+	board[39] = 5;
+	board[41] = 8;
+	board[44] = 6;
+	board[46] = 5;
+	board[48] = 7;
+	board[49] = 4;
+	board[61] = 4;
+	board[62] = 7;
+	board[64] = 1;
+	board[65] = 7;
+	board[69] = 6;
+	board[70] = 9;
+	board[72] = 8;
+	board[77] = 7;
+	board[78] = 1;
+}
+
+function hard_board(){
+	for(var i = board.length-1; i>=0; --i) board[i] = "";
+	board[0] = 1;
+	board[5] = 5;
+	board[8] = 3;
+	board[9] = 7;
+	board[10] = 4;
+	board[12] = 8;
+	board[13] = 3;
+	board[15] = 2;
+	board[16] = 1;
+	board[18] = 9;
+	board[19] = 3;
+	board[21] = 1;
+	board[24] = 6;
+	board[27] = 8;
+	board[31] = 6;
+	board[35] = 7;
+	board[36] = 2;
+	board[44] = 4;
+	board[45] = 5;
+	board[49] = 9;
+	board[53] = 1;
+	board[56] = 1;
+	board[59] = 2;
+	board[61] = 3;
+	board[63] = 6;
+	board[65] = 9;
+	board[68] = 4;
+	board[70] = 5;
+	board[71] = 2;
+	board[75] = 7;
+}
+
 function color_square(address){
-	console.log("in color_square function");
 	var row = Math.floor(address / 9);
 	var column = address%9;
 
 	for (var i=0; i<3; i++){
 		for(var j=0; j<3; j++){
 			cell = (row + i) * 9 + (column +j);
-			console.log(cell);
 			var c = document.getElementById('board').children[cell];
 			var ctx=c.getContext('2d');
 			ctx.font = "20 Arial";
@@ -90,7 +157,7 @@ function make_move(){
 	}
 	else {
 		var n = document.getElementById(this.id);
-		boardEasy[n.className] = number;
+		board[n.className] = number;
 		redraw_board();
 	}
 }
@@ -113,20 +180,30 @@ function redraw_board(){
 		ctx.textAlign = 'center';
 		ctx.font = "20 Arial";
 		ctx.strokeStyle = "#FF0000";
-		ctx.strokeText(boardEasy[i], 24, 28);
+		ctx.strokeText(board[i], 24, 28);
 	}
 }
 
 // randomly assigns numbers on the board based on difficulty
-function generate_board(count){
+function generate_board(diff){
+	if (diff == 'easy') {
+		easy_board();
+	}
+	else if (diff == 'medium'){
+		medium_board();
+	}
+	else {
+		hard_board();
+	}
+
 	redraw_board();
-	for(var i=0; i < boardEasy.length; i++){
+	for(var i=0; i < board.length; i++){
 		var c = document.getElementById('board').children[i];
 		var ctx = c.getContext('2d');
 		ctx.textAlign = 'center';
 		ctx.font = "20 Arial";
 		ctx.strokeStyle = "#FF0000";
-		ctx.strokeText(boardEasy[i], 24, 28);
+		ctx.strokeText(board[i], 24, 28);
 	}
 
 }
@@ -147,16 +224,12 @@ function check_answer(){
 
 function solution() {
 
-	for (var i=0; i<boardEasy.length; i++){
-		// if ((check_row(boardEasy[i], i) && check_column(boardEasy[i], i) && check_square(boardEasy[i], i)) == false){
-		// 	console.log("in if statment");
-		// 	return false;
-		// }
-		if(check_square(boardEasy[i], i) == false){
+	for (var i=0; i<board.length; i++){
+		if ((check_row(board[i], i) && check_column(board[i], i) && check_square(board[i], i)) == false){
+			console.log("in if statment");
 			return false;
 		}
 	}
-	console.log("it made it here");
 	return true;
 }
 
@@ -166,7 +239,7 @@ function check_row(num, address){
 	for (var i=0; i<9; i++){
 		var cell = (row * 9 + i);
 		if ( cell != address){
-			if ((boardEasy[cell] == num) || (boardEasy[cell] == "")){
+			if ((board[cell] == num) || (board[cell] == "")){
 				console.log("row "+row);
 				return false;
 			}
@@ -182,7 +255,7 @@ function check_column(num, address){
 		var cell = (column + 9*i);
 		console.log("cell: "+cell);
 		if ( cell != address){
-			if ((boardEasy[cell] == num) || (boardEasy[cell] == "")){
+			if ((board[cell] == num) || (board[cell] == "")){
 				console.log("column "+column);
 				return false;
 			}
@@ -195,11 +268,14 @@ function check_square(num, address){
 	var row = Math.floor(address / 9);
 	var column = address%9;
 
+	row = Math.floor(row/3) * 3;
+	column = Math.floor(column/3) *3;
+
 	for (var i=0; i<3; i++){
 		for(var j=0; j<3; j++){
 			cell = (row + i) * 9 + (column +j);
 			if (cell != address){
-				if((boardEasy[cell] == num) || (boardEasy[cell] == "")){
+				if((board[cell] == num) || (board[cell] == "")){
 					console.log("cell "+ cell);
 					return false;
 				}
